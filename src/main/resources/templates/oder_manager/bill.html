@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin/styleBill.css">
+    <script src="https://kit.fontawesome.com/08c104de7d.js" crossorigin="anonymous"></script>
+    <title>Hóa đơn</title>
+</head>
+
+<body>
+
+<div class="donhang">
+    <div class="bill">
+        <span style="font-size: 30px; font-weight: bold;">ĐƠN HÀNG</span><br>
+        <div class="sub_bill">
+            <div class="items">
+                <span>Mã số: </span>
+                <span>Ngày mua: </span>
+            </div>
+            <div class="items right">
+                <th:block th:each="item : ${billOArr}">
+                    <span th:text="${item}"></span>
+                </th:block>
+            </div>
+        </div>
+    </div>
+    <div class="table-customer">
+        <table  class="table-left">
+            <tr>
+                <td>Mã khách hàng:</td>
+            </tr>
+            <tr>
+                <td>Tên khách hàng:</td>
+            </tr>
+            <tr>
+                <td>Số điện thoại:</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ:</td>
+            </tr>
+        </table>
+        <table  class="table-right">
+            <th:block th:each="item : ${billCArr}">
+                <tr>
+                    <td th:text="${item}"></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+    <div class="table-bill">
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã sản phẩm</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Giảm giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each=" list: ${billOlPArr}">
+                    <tr>
+                        <td th:each="i : ${list}" th:text="${i}">
+                        </td>
+                    </tr>
+                </th:block>
+                <tr>
+                    <th colspan="6" class="left_bottom">Phí ship:</th>
+                    <td style="border-left: none;"><span class="ship">15.000</span><sup>đ</sup></td>
+                </tr>
+                <tr>
+                    <th colspan="6" class="left_bottom">Tổng tiền:</th>
+                    <td style="border-left: none;"><span th:text="${total}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <b><i>&emsp;&emsp;Kiểm tra hàng trước khi nhận</i></b>
+</div>
+<script>
+    const price = document.querySelectorAll("td:nth-child(4)")
+    price.forEach(element => {
+        element.innerHTML = Number(element.innerHTML).toLocaleString('de-DE')+"đ"
+    });
+    const thanhTien = document.querySelectorAll("td:nth-child(7)")
+    thanhTien.forEach(element => {
+        element.innerHTML = Number(element.innerHTML).toLocaleString('de-DE')+"đ"
+    });
+</script>
+</body>
+
+</html>

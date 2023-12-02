@@ -1,0 +1,97 @@
+:root {
+    --bg1 :#9b59b6;
+    --bg2 :#3498db;
+    --bg3 :#26ade4;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    font-family: 'Vibur', cursive;
+    /*   the main font */
+    font-family: 'Abel', sans-serif;
+    opacity: .95;
+}
+
+.container{
+    width: 340px;
+    height: 450px;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.container .form {
+    position: absolute;
+    top: 100px;
+    padding: 0 24px;
+    width: 340px;
+    transition: all 0.5s ease;
+}
+.container .form-two {
+    left: 340px;
+}
+.container .form h1 {
+    color: #333;
+    margin-bottom: 40px;
+}
+.container .form input {
+    height: 35px;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background-color: transparent;
+}
+.container .form button {
+    height: 35px;
+    width: 120px;
+    background: linear-gradient(to right, var(--bg1), var(--bg2));
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+.form-step {
+    display: flex;
+    height: 40px;
+    border-bottom: 2px solid #ccc;
+}
+.form-step span {
+    display: block;
+    width: 170px;
+    line-height: 40px;
+}
+.line {
+    position: absolute;
+    width: 170px;
+    height: 40px;
+    background: linear-gradient(to right, var(--bg1), var(--bg2));
+    opacity: 0.7;
+    transition: all 0.5s ease;
+}
+.line::before {
+    content: "";
+    position: absolute;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #3498db;
+    border-top: 20px solid transparent;
+    right: -20px;
+}

@@ -1,0 +1,96 @@
+.content {
+    background-color: #f3f3f3;
+    height: calc(100vh - 67px);
+    overflow-y: auto;
+}
+.tools {
+    display: flex;
+}
+.tools .icon_add {
+    margin-left: 130px;
+    font-size: 50px;
+    color: #33CCFF;
+}
+.tools .timkiem {
+    margin-left: 100px;
+    margin-top: 0.6em;
+    position: relative;
+    z-index: 3;
+}
+
+.timkiem input {
+    margin-left: 70px;
+    height: 1.875em;
+    width: 50em;
+    border-radius: 50px;
+    border: none;
+    padding: 20px;
+    outline: none;
+    position: relative;
+    background: #fff;
+}
+
+.timkiem button {
+    position: absolute;
+    font-size: 1.25em;
+    right: 1%;
+    line-height: 38px;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    top: 0;
+}
+.table-product {
+    margin: 50px auto;
+    max-width: 950px;
+}
+.table-product table {
+    background-color: white;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+}
+.table-product table img {
+    width: 100%;
+    height: 50px;
+    object-fit: cover;
+}
+th {
+    background-color: #1877F2;
+    color: white;
+}
+th, td {
+    padding: 4px 8px;
+    border: 2px solid rgb(158, 156, 156);
+    max-width: 200px;
+}
+td.sale {
+    max-width: 110px;
+}
+td:last-child{
+    min-width: 140px;
+}
+.btn-group {
+    margin: 20px 0;
+}
+.btn-group a {
+    text-decoration: none;
+}
+.btn-edit {
+    border: 1px solid rgb(0, 89, 255);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: rgb(0, 89, 255);
+    color: white;
+}
+.btn-delete {
+    border: 1px solid rgb(255, 72, 0);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: rgb(255, 72, 0);
+    color: white;
+}

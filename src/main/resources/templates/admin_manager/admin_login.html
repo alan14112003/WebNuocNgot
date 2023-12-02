@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/styleLogin.css}">
+    <script src="https://kit.fontawesome.com/08c104de7d.js" crossorigin="anonymous"></script>
+    <title>Log in</title>
+</head>
+<body>
+<div class="overlay">
+    <!-- LOGN IN FORM by Omar Dsoky -->
+    <form th:action="@{/admin/login_check}" method="post" th:object="${admin}">
+        <!--   con = Container  for items in the form-->
+        <div class="con">
+            <!--     Start  header Content  -->
+            <header class="head-form">
+                <div role="alert" th:if="${message}" th:text="${message}"></div>
+                <h2>Log In</h2>
+                <!--     A welcome message or an explanation of the login form -->
+                <p>login here using your email and password</p>
+            </header>
+            <!--     End  header Content  -->
+            <br>
+            <div class="field-set">
+                <!--   user name -->
+                <span class="input-item">
+                        <i class="fa fa-user-circle"></i>
+                    </span>
+                <!--   user name Input-->
+                <input class="form-input" id="txt-input" type="email" th:field="*{email}" placeholder="email" required>
+
+                <br>
+
+                <span class="input-item">
+                        <i class="fa fa-key"></i>
+                    </span>
+                <!--   Password Input-->
+                <input class="form-input" type="password" th:field="*{password}" required placeholder="Password" minlength="1" id="pwd" name="password">
+
+                <!--      Show/hide password  -->
+                <span>
+                        <i class="fa fa-eye" aria-hidden="true" type="button" id="eye"></i>
+                    </span>
+
+
+                <br>
+                <!--        buttons -->
+                <!--      button LogIn -->
+                <button type="submit" class="log-in"> Log In </button>
+            </div>
+
+            <!--   other buttons -->
+            <div class="other">
+                <!--      Forgot Password button-->
+                <button class="btn submits frgt-pass">Forgot Password</button>
+                <!--     Sign Up button -->
+                <a class="btn submits sign-up" th:href="@{/admin/signup}">Sign Up
+                    <!--         Sign Up font icon -->
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                </a>
+                <!--      End Other the Division -->
+            </div>
+
+            <!--   End Conrainer  -->
+        </div>
+
+        <!-- End Form -->
+    </form>
+</div>
+<script>
+    function show() {
+        var p = document.getElementById('pwd');
+        p.setAttribute('type', 'text');
+    }
+
+    function hide() {
+        var p = document.getElementById('pwd');
+        p.setAttribute('type', 'password');
+    }
+
+    var pwShown = 0;
+
+    document.getElementById("eye").addEventListener("click", function () {
+        if (pwShown == 0) {
+            pwShown = 1;
+            show();
+        } else {
+            pwShown = 0;
+            hide();
+        }
+    }, false);
+</script>
+</body>
+</html>

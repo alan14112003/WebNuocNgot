@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- -----------------------------------css cho icon font-awesome-------------------------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+    <!-- -----------css chung---------------- -->
+    <link rel="stylesheet" href="/css/user/info.css">
+    <!-- -----------css index---------------- -->
+    <title>Document</title>
+</head>
+
+<body>
+<section class="pc_screen">
+    <nav class="pc-nav nav">
+        <div class="container">
+            <ul>
+                <li><a href="/"><img src="/image/thuonghieu/logo.png" alt=""></a></li>
+                <li>
+                    <form th:action="@{/search}" method="post" enctype="multipart/form-data">
+                        <input type="text" autocomplete="off" class="input-search" name="nameSearch" placeholder="tìm kiếm...">
+                        <div class="autobox"></div>
+                        <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </li>
+                <li th:if="${checkCart} != 0"><a href="/show-cart"><button class="cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                    <span class="dot"><code th:text="${checkCart}"></code></span></button></a>
+                </li>
+                <li th:if="${checkCart} == 0"><a href="/show-cart"><button><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</button></a>
+                </li>
+                <li th:if="${customerLogin} == null"><a href="/signing"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a></li>
+                <li class="information" th:if="${customerLogin} != null">
+                    <a href="#">
+                        <img th:src="${customerLogin.avatarCustomerPath}">
+                        <span th:text="${customerLogin.name}"></span>
+                    </a>
+                    <ol class="subnav">
+                        <li>
+                            <a href="/info">Thông tin cá nhân</a>
+                        </li>
+                        <li>
+                            <a href="/logout">Đăng xuất</a>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="mobile-nav nav">
+        <div class="container">
+            <ul>
+                <li><a href="/"><img src="/image/thuonghieu/logo.png" alt=""></a></li>
+                <li th:if="${checkCart} != 0"><a href="/show-cart"><button class="cart"><i class="fa-solid fa-cart-shopping"></i>
+                    <span class="dot"><code th:text="${checkCart}"></code></span></button></a>
+                </li>
+                <li th:if="${checkCart} == 0"><a href="/show-cart"><button><i class="fa-solid fa-cart-shopping"></i></button></a>
+                </li>
+                <li th:if="${customerLogin} == null"><a href="/signing"><i class="fa-solid fa-right-to-bracket"></i></a></li>
+                <li class="information" th:if="${customerLogin} != null">
+                    <a href="#">
+                        <img th:src="${customerLogin.avatarCustomerPath}">
+                        <span th:text="${customerLogin.name}"></span>
+                    </a>
+                    <ol class="subnav">
+                        <li>
+                            <a href="/info">Thông tin cá nhân</a>
+                        </li>
+                        <li>
+                            <a href="/logout">Đăng xuất</a>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+            <div class="form-search">
+                <form th:action="@{/search}" method="post" enctype="multipart/form-data">
+                    <input type="text" autocomplete="off" class="input-search" name="nameSearch" placeholder="tìm kiếm...">
+                    <div class="autobox"></div>
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="main">
+    <div class="container">
+        <div class="title">
+            <h2>Thông tin của bạn</h2>
+            <a href="/info/change-password">Đổi mật khẩu</a>
+        </div>
+        <div class="form">
+            <form action="/info/edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:value="${customerLogin.id}" name="id">
+                <div class="content">
+                    <div class="avatar">
+                        <div class="image">
+                            <img th:src="${customerLogin.avatarCustomerPath}" alt="avatar">
+                        </div>
+                        <div class="text">
+                            <label for="fileImage" class="lbFileImage">chọn ảnh đại diện</label>
+                            <input type="file" name="avatar" id="fileImage" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-title">Tên:</div>
+                            <div class="colIp">
+                                <input check="true" autocomplete="off" type="text" name="name" th:value="${customerLogin.name}" readonly
+                                                      required>
+                            </div>
+                            <div onclick="openInput(this)" class="colEdit"><i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-title">Email:</div>
+                            <div class="colIp">
+                                <input check="true" autocomplete="off" type="email" name="email" th:value="${customerLogin.email}" readonly
+                                                      required>
+                            </div>
+                            <div onclick="openInput(this)" class="colEdit"><i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-title">Số điện thoại:</div>
+                            <div class="colIp"><input check="true" autocomplete="off" type="text" name="phone" th:value="${customerLogin.phone}" readonly required>
+                            </div>
+                            <div onclick="openInput(this)" class="colEdit"><i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-title">Địa chỉ:</div>
+                            <div class="colIp">
+                                <input check="true" type="text" autocomplete="off" name="address" th:value="${customerLogin.address}"
+                                                      readonly required></div>
+                            <div onclick="openInput(this)" class="colEdit"><i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="save">
+                    <button class="submit" type="button" check="true">Lưu</button>
+                    <button class="reset" type="reset" check="true">Bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<section class="footer">
+    <div class="container">
+        <div class="lienket-bar">
+            <div class="lienket">
+                <h4 class="lienket-title">Hỗ trợ khách hàng</h4>
+                <ul>
+                    <li class="lienket-item"><a href="">Hotline: <span>1900.2301</span></a></li>
+                    <li class="lienket-item"><a href="">Các câu hỏi thường gặp</a></li>
+                    <li class="lienket-item"><a href="">Gửi yêu cầu hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="lienket">
+                <h4 class="lienket-title">Về Smart world</h4>
+                <ul>
+                    <li class="lienket-item"><a href="">Giới thiệu smart world</a></li>
+                    <li class="lienket-item"><a href="">Tuyển dụng</a></li>
+                    <li class="lienket-item"><a href="">Gửi góp ý, khiếu nại</a></li>
+                </ul>
+            </div>
+            <div class="lienket thong-tin-rieng">
+                <h4 class="lienket-title">Kết nối với chúng tôi</h4>
+                <ul>
+                    <li class="lienket-item"><a href="https://www.facebook.com/profile.php?id=100048327580198"><i
+                            class="fa-brands fa-facebook"></i></a></li>
+                    <li class="lienket-item"><a href="tel:0359591411"><i class="fa-solid fa-square-phone"></i></a>
+                    </li>
+                    <li class="lienket-item"><a href="mailto:sonnn.21it@vku.udn.vn?subject=Hỗ trợ khách hàng"><i
+                            class="fa-brands fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="thong-tin-them">
+        <div class="container">
+            <div class="thong-tin-them-text">
+                <p>© 2018. Công ty cổ phần Smart World. Địa chỉ: 128 Trần Quang Khải, Q. Ngũ Hành Sơn, TP.Đà Nẵng.
+                    Điện thoại: 0359591411.
+                    Email: cskh@smartworld.com. Chịu trách nhiệm nội dung: Nguyễn Ngọc Sơn. </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script th:inline="javascript">
+    function messenger() {
+        let mess = [[${message}]]
+        if (mess != null)
+            alert(mess)
+    }
+    setTimeout(messenger, 500)
+</script>
+<script th:inline="javascript">
+    let button = document.querySelectorAll(".save button")
+    let reset = document.querySelector(".save .reset")
+    function openInput(element) {
+        let row = element.parentElement.querySelector(".colIp input")
+        let check = row.getAttribute("check")
+        if (check == 'true') {
+            row.setAttribute("check", 'false')
+            row.removeAttribute("readonly")
+            row.style = "cursor:text; border:2px solid #25D366; background-color: #fff; color: #333";
+        } else {
+            row.setAttribute("check", 'true')
+            row.style = "cursor:context-menu; background-color: #25D366; color: #fff";
+        }
+        openButton()
+    }
+
+    let image = document.querySelector(".image img")
+    let fileChooser = document.querySelector("#fileImage")
+    fileChooser.addEventListener("change", function (event) {
+        let uploadFileName = event.target.files[0]
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            image.setAttribute("src", e.target.result);
+        }
+        reader.readAsDataURL(uploadFileName);
+        openButton()
+    })
+    function openButton() {
+        for (let index = 0; index < button.length; index++) {
+            if(button[index].getAttribute("check") == 'true') {
+                button[index].setAttribute("check", 'false')
+                button[index].style="background-color: #FF914D; color: #fff; border: 2px solid #9ec3ff; cursor: pointer;"
+            }
+            if(button[index].getAttribute("class") == 'submit') {
+                button[index].setAttribute("type", "submit")
+            }
+        }
+    }
+    function closeButton() {
+        for (let index = 0; index < button.length; index++) {
+            if(button[index].getAttribute("check") == 'false') {
+                button[index].setAttribute("check", 'true')
+                button[index].style=" rgba(252, 183, 22, 0.3); rgb(154, 154, 154); border: none; cursor: context-menu;"
+            }
+            if(button[index].getAttribute("class") == 'submit') {
+                button[index].setAttribute("type", 'button')
+            }
+        }
+    }
+    reset.addEventListener("click", function() {
+        if ([[${customerLogin.avatar}]] == null) {
+            image.setAttribute("src", "/image/admin.jpg");
+        } else {
+            image.setAttribute("src", [[${customerLogin.avatarCustomerPath}]]);
+        }
+        closeButton();
+    })
+</script>
+</body>
+
+</html>

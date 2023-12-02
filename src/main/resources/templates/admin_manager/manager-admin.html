@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/Grid.css">
+  <link rel="stylesheet" href="/css/admin/admin.css">
+  <link rel="stylesheet" href="/css/admin/manageProduct.css">
+  <script src="https://kit.fontawesome.com/08c104de7d.js" crossorigin="anonymous"></script>
+  <title>Manager admin</title>
+</head>
+
+<body>
+<div class="grid">
+  <div class="row no-gutters">
+    <div class="col l-12 header">
+      <div class="logo">
+        <img src="/image/logo_2021.png" alt="">
+      </div>
+      <input type="checkbox" id="check" class="check-btn">
+      <label for="check" class="info">
+        <div class="info-avatar info-item">
+          <img th:src="${accMe.avatarAdminPath}" alt="">
+        </div>
+        <div class="info-email info-item" th:if="${accMe}" th:text="${accMe.email}">
+        </div>
+        <div class="info-email info-item" th:unless="${accMe}">
+          information
+        </div>
+        <div class="sub-info">
+          <div class="chage_pw item">
+            <a href="/admin/editPassword">Đổi mật khẩu</a>
+          </div>
+          <div class="chage_pw item">
+            <a href="/admin/edit">Đổi thông tin</a>
+          </div>
+          <div class="log_out item">
+            <a href="/admin/login">Đăng xuất</a>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col c-0 m-3 l-2 col-left">
+      <div class="top_bar">
+        <h2>Quản trị viên</h2>
+      </div>
+      <ul class="bar mng_a">
+        <li><a href="/admin">Tổng quan</a></li>
+        <li>
+          <span>Bán hàng</span>
+          <ul class="sub_bar">
+            <li><a th:href="@{'/admin/products_manager'}">Sản phẩm</a></li>
+            <li><a href="/admin/customer_manager">Người dùng</a></li>
+            <li><a href="/admin/oder_manager">Đơn hàng</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col c-12 m-9 l-10 content">
+      <div class="row no-gutters">
+        <div class="col l-12 heading">
+          <h1>Manage admin</h1>
+          <div class="tools">
+            <div class="timkiem" style="margin-left: 18%;">
+              <form action="/admin/manager-admin/search" method="post" th:object="${admin}">
+                <input th:field="*{name}" type="text" name="s" autocomplete="off" placeholder="Tìm kiếm..." id="inpS" class="input-search">
+                <div class="autobox">
+                </div>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="messenger" th:if="${message}" th:text="${message}">
+      </div>
+      <div class="table-product" style="margin-left: 20%;">
+        <table>
+          <tr>
+            <th> ID </th>
+            <th> Name </th>
+            <th> Password </th>
+            <th> Email </th>
+            <th> Phone </th>
+            <th> Enabled </th>
+            <th> Avatar </th>
+            <th></th>
+          </tr>
+          <th:block th:each="admin : ${adminList}">
+            <tr>
+              <td>[[${admin.idA}]]</td>
+              <td>[[${admin.name}]]</td>
+              <td>[[${admin.password}]]</td>
+              <td>[[${admin.email}]]</td>
+              <td>[[${admin.sdt}]]</td>
+              <td>[[${admin.enabled}]]</td>
+              <td><img th:src="${admin.avatarAdminPath}"></td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn-edit" th:href="@{'/admin/manager-admin/update/'+ ${admin.idA}}"><i
+                          class="fa-solid fa-circle-check"></i></a>
+                  <a class="btn-delete"
+                     th:href="@{'/admin/manager-admin/delete/'+ ${admin.idA}}"><i
+                          class="fa-solid fa-trash-can"></i></a>
+                </div>
+              </td>
+            </tr>
+          </th:block>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:inline="javascript">
+  const inputSearch = document.querySelector(".input-search")
+  const autoBox = document.querySelector(".autobox")
+  let recomentlist = [[${nameAdminList}]]
+  inputSearch.onkeyup = (e) => {
+    let checkData = e.target.value
+    let dataArr = []
+    if (checkData) {
+      dataArr = recomentlist.filter((data)=> {
+        return data.toLocaleLowerCase().startsWith(checkData.toLocaleLowerCase())
+      })
+
+      dataArr = dataArr.map((data)=> {
+        return data = '<li>'+ data +'</li>'
+      })
+      autoBox.classList.add('active')
+      showSearch(dataArr)
+      let liItem = document.querySelectorAll('.autobox li')
+      for (let i = 0; i < liItem.length; i++) {
+        liItem[i].addEventListener("click", function(){
+          inputSearch.value = liItem[i].innerHTML
+          autoBox.classList.remove('active')
+        })
+      }
+    }
+    else {
+      autoBox.classList.remove('active')
+    }
+  }
+
+  function showSearch(list) {
+    let listData
+    if (!list.length) {
+      listData = '<li>'+ inputSearch.value +'</li>'
+    } else {
+      listData = list.join('')
+    }
+    autoBox.innerHTML = listData
+  }
+</script>
+</body>
+
+</html>

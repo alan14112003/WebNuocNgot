@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- -----------------------------------css cho icon font-awesome-------------------------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <!-- -----------------------thư viện owlcarousel------------------------------------ -->
+    <link rel="stylesheet" href="/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.theme.default.min.css">
+
+    <!-- -----------css chung---------------- -->
+    <link rel="stylesheet" href="/css/Grid.css">
+    <link rel="stylesheet" href="/css/user/styleUser.css">
+    <!-- -----------css index---------------- -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <link rel="icon" href="/image/thuonghieu/logo.png" type="image/x-icon">
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+    <section class="pc_screen">
+        <nav class="pc-nav nav">
+            <div class="container">
+                <ul>
+                    <li><a href="/"><img src="/image/thuonghieu/logo.png" alt=""></a></li>
+                    <li>
+                        <form th:action="@{/search}" method="post" enctype="multipart/form-data">
+                            <input type="text" autocomplete="off" class="input-search" name="nameSearch" placeholder="tìm kiếm...">
+                            <div class="autobox"></div>
+                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </li>
+                    <li th:if="${checkCart} != 0"><a href="/show-cart"><button class="cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                        <span class="dot"><code th:text="${checkCart}"></code></span></button></a>
+                    </li>
+                    <li th:if="${checkCart} == 0"><a href="/show-cart"><button><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</button></a>
+                    </li>
+                    <li th:if="${customerLogin} == null"><a href="/signing"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a></li>
+                    <li class="information" th:if="${customerLogin} != null">
+                        <a href="#">
+                            <img th:src="${customerLogin.avatarCustomerPath}">
+                            <span th:text="${customerLogin.name}"></span>
+                        </a>
+                        <ol class="subnav">
+                            <li>
+                                <a href="/info">Thông tin cá nhân</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Đăng xuất</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="mobile-nav nav">
+            <div class="container">
+                <ul>
+                    <li><a href="/"><img src="/image/thuonghieu/logo.png" alt=""></a></li>
+                    <li th:if="${checkCart} != 0"><a href="/show-cart"><button class="cart"><i class="fa-solid fa-cart-shopping"></i>
+                        <span class="dot"><code th:text="${checkCart}"></code></span></button></a>
+                    </li>
+                    <li th:if="${checkCart} == 0"><a href="/show-cart"><button><i class="fa-solid fa-cart-shopping"></i></button></a>
+                    </li>
+                    <li th:if="${customerLogin} == null"><a href="/signing"><i class="fa-solid fa-right-to-bracket"></i> </a></li>
+                    <li class="information" th:if="${customerLogin} != null">
+                        <a href="#">
+                            <img th:src="${customerLogin.avatarCustomerPath}">
+                            <span th:text="${customerLogin.name}"></span>
+                        </a>
+                        <ol class="subnav">
+                            <li>
+                                <a href="/info">Thông tin cá nhân</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Đăng xuất</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+                <div class="form-search">
+                    <form th:action="@{/beverage/search}" method="post" enctype="multipart/form-data">
+                        <input type="text" autocomplete="off" class="input-search" name="nameSearch" placeholder="tìm kiếm...">
+                        <div class="autobox"></div>
+                        <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <section class="menu-bar">
+            <div class="container">
+                <div class="menu-bar-content">
+                    <div class="loai">
+                        <div class="content">
+                            <label for="checkMenu">Loại nước</label>
+                            <input type="checkbox" class="checkMenu-btn" hidden id="checkMenu">
+                            <ul class="submenu">
+                                <li>
+                                    <a
+                                            th:if="${linkBread} != '<a href= \'/filter/coGa\'>có ga</a>' and ${linkBread} != '<a href= \'/filter/khongGa\'>không có ga</a>'" class="loai-active" href="/">Mặc định</a>
+                                    <a
+                                            th:if="${linkBread} == '<a href= \'/filter/coGa\'>có ga</a>' or ${linkBread} == '<a href= \'/filter/khongGa\'>không có ga</a>'" href="/">Mặc định</a>
+                                </li>
+                                <li>
+                                    <a th:if="${linkBread} == '<a href= \'/filter/coGa\'>có ga</a>'" class="loai-active" href="/filter/coGa">Có ga</a>
+                                    <a th:if="${linkBread} != '<a href= \'/filter/coGa\'>có ga</a>'" href="/filter/coGa">Có ga</a>
+                                </li>
+                                <li>
+                                    <a th:if="${linkBread} == '<a href= \'/filter/khongGa\'>không có ga</a>'" class="loai-active" href="/filter/khongGa">Không có ga</a>
+                                    <a th:if="${linkBread} != '<a href= \'/filter/khongGa\'>không có ga</a>'" href="/filter/khongGa">Không có ga</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="thuonghieu">
+                        <ul>
+                            <th:block th:each="category : ${listAllCategory}">
+                                <li><a th:href="@{'/filter/' + ${category.id}}"><img th:src="@{${category.logoPath}}" alt=""></a>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="breadcrumb">
+                    <a href="/">Trang chủ</a>/<span th:utext="${linkBread}"></span>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="slide">
+        <div class="grid wide">
+            <div class="row no-gutters">
+                <div class="col c-12 m-10 l-10 l-o-1 m-o-1">
+                    <div class="slider owl-carousel owl-theme">
+                        <img class="item" src="/image/slide/484de2084c2c8f72d63d.jpg" alt="">
+                        <img class="item" src="/image/slide/fe8397c639e2fabca3f3.jpg" alt="">
+                        <img class="item" src="/image/slide/z3520007523207_6c3a4d2ca07b2ed11cb24077173ce5dd.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="showSale">
+        <div class="container">
+            <i th:if="${check}" class="fa-solid fa-square-check"></i>
+            <i th:unless="${check}" class="fa-solid fa-square"></i>
+            <a href="/filter/showSale">có <code th:text="${countSale}"></code> nước ngọt khuyến mãi</a>
+        </div>
+    </section>
+    <section class="products">
+        <div class="container">
+            <div class="row1">
+                <th:block th:each="product : ${listProduct}">
+                    <div class="item">
+                        <div class="image">
+                            <img th:src="@{${product.imageProductPath}}" alt="">
+                        </div>
+                        <div class="name">
+                            <span>[[${product.nameP}]]</span>
+                        </div>
+                        <div class="price">
+                            <span class="newprice"><strong>[[${product.price}]]</strong><sup>đ</sup></span>
+                            <span th:if="${product.sale} != '' " class="oldprice"><code></code><sup>đ</sup></span>
+                            <span th:if="${product.sale} != '' " class="sale">Giảm <code>[[${product.sale}]]</code>%</span>
+                        </div>
+                        <div class="add-cart">
+                            <div class="add">
+                                <a th:unless="${linkWeb} == null" th:if="${customerLogin} == null" th:href="@{'/addCart/0/'
+                                +${product.idP}+'/'+${linkWeb}}">
+                                    Chọn mua
+                                </a>
+                                <a th:unless="${linkWeb} != null" th:if="${customerLogin} == null" th:href="@{'/addCart/0/'
+                                +${product.idP}+'/0'}">
+                                    Chọn mua
+                                </a>
+                                <a th:unless="${linkWeb} == null" th:if="${customerLogin} != null" th:href="@{'/addCart/'+${customerLogin.id}+'/'
+                                +${product.idP}+'/'+ ${linkWeb}}">
+                                    Chọn mua
+                                </a>
+                                <a th:unless="${linkWeb} != null" th:if="${customerLogin} != null" th:href="@{'/addCart/'+${customerLogin.id}+'/'
+                                +${product.idP}+'/0'}">
+                                    Chọn mua
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="lienket-bar">
+                <div class="lienket">
+                    <h4 class="lienket-title">Hỗ trợ khách hàng</h4>
+                    <ul>
+                        <li class="lienket-item"><a href="">Hotline: <span>1900.2301</span></a></li>
+                        <li class="lienket-item"><a href="">Các câu hỏi thường gặp</a></li>
+                        <li class="lienket-item"><a href="">Gửi yêu cầu hỗ trợ</a></li>
+                    </ul>
+                </div>
+                <div class="lienket">
+                    <h4 class="lienket-title">Về Beverage</h4>
+                    <ul>
+                        <li class="lienket-item"><a href="">Giới thiệu Beverage</a></li>
+                        <li class="lienket-item"><a href="">Tuyển dụng</a></li>
+                        <li class="lienket-item"><a href="">Gửi góp ý, khiếu nại</a></li>
+                    </ul>
+                </div>
+                <div class="lienket thong-tin-rieng">
+                    <h4 class="lienket-title">Kết nối với chúng tôi</h4>
+                    <ul>
+                        <li class="lienket-item"><a href="https://www.facebook.com/profile.php?id=100048327580198"><i
+                                    class="fa-brands fa-facebook"></i></a></li>
+                        <li class="lienket-item"><a href="tel:0359591411"><i class="fa-solid fa-square-phone"></i></a></li>
+                        <li class="lienket-item"><a href="mailto:sonnn.21it@vku.udn.vn?subject=Hỗ trợ khách hàng"><i class="fa-brands fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="thong-tin-them">
+            <div class="container">
+                <div class="thong-tin-them-text">
+                    <p>© 2018. Công ty cổ phần Smart World. Địa chỉ: 128 Trần Quang Khải, Q. Ngũ Hành Sơn, TP.Đà Nẵng.
+                        Điện thoại: 0359591411.
+                        Email: cskh@smartworld.com. Chịu trách nhiệm nội dung: Nguyễn Ngọc Sơn. </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- -----------------------thư viện owlcarousel------------------------------------ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="/owlcarousel/owl.carousel.min.js"></script>
+    <script>
+        var owl = $('.slider');
+        owl.owlCarousel({
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 1500,
+            loop: true,
+        })
+    </script>
+<!---------------------- script -------------------------->
+
+    <script th:inline="javascript">
+        function messenger() {
+            let mess = [[${message}]]
+            if (mess != null)
+                alert(mess)
+        }
+        setTimeout(messenger, 200)
+    </script>
+    <script th:inline="javascript">
+        const inputSearch = document.querySelector(".input-search")
+        const autoBox = document.querySelector(".autobox")
+        let recomentlist = [[${allName}]]
+        inputSearch.onkeyup = (e) => {
+            let checkData = e.target.value
+            let dataArr = []
+            if (checkData) {
+                dataArr = recomentlist.filter((data)=> {
+                    return data.toLocaleLowerCase().startsWith(checkData.toLocaleLowerCase())
+                })
+
+                dataArr = dataArr.map((data)=> {
+                    return data = '<li>'+ data +'</li>'
+                })
+                autoBox.classList.add('active')
+                showSearch(dataArr)
+                let liItem = document.querySelectorAll('.autobox li')
+                for (let i = 0; i < liItem.length; i++) {
+                    liItem[i].addEventListener("click", function(){
+                        inputSearch.value = liItem[i].innerHTML
+                        autoBox.classList.remove('active')
+                    })
+                }
+            }
+            else {
+                autoBox.classList.remove('active')
+            }
+        }
+
+        function showSearch(list) {
+            let listData
+            if (!list.length) {
+                listData = '<li>'+ inputSearch.value +'</li>'
+            } else {
+                listData = list.join('')
+            }
+            autoBox.innerHTML = listData
+        }
+    </script>
+
+    <script th:inline="javascript">
+        const listPrice = document.querySelectorAll(".newprice strong")
+        listPrice.forEach(element => {
+            let price = element.parentElement.parentElement
+            let priceOld = price.querySelector('.oldprice code')
+            let sale = price.querySelector(".sale code")
+            if (sale != null && priceOld != null) {
+                let toTalNum = Number(element.innerHTML) /( 1 - (Number(sale.innerHTML)/100))
+                priceOld.innerHTML = Math.round(toTalNum).toLocaleString('de-DE')
+                console.log(toTalNum)
+            }
+        });
+    </script>
+    <script>
+        const newPrice = document.querySelectorAll(".newprice strong")
+        newPrice.forEach(element => {
+            element.innerHTML = Number(element.innerHTML).toLocaleString('de-DE')
+        });
+    </script>
+</body>
+
+</html>

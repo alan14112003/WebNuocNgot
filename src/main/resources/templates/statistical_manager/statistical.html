@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Grid.css">
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/manageProduct.css">
+    <script src="https://kit.fontawesome.com/08c104de7d.js" crossorigin="anonymous"></script>
+    <title>Manage statistical</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+        .content .items {
+            height: 200px;
+            background-color: #CCFFCC;
+            border-radius: 5px;
+            display: block;
+            cursor: pointer;
+        }
+        .content .items:hover {
+            transform: scale(1.15);
+        }
+        .content .items .item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            font-size: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .content .items .item i {
+            margin-right: 8px;
+        }
+        .content .items .item span {
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="grid">
+    <div class="row no-gutters">
+        <div class="col l-12 header">
+            <div class="logo">
+                <img src="/image/logo_2021.png" alt="">
+            </div>
+            <input type="checkbox" id="check" class="check-btn">
+            <label for="check" class="info">
+                <div class="info-avatar info-item">
+                    <img src="/image/admin.jpg" alt="">
+                </div>
+                <div class="info-email info-item" th:if="${accMe}" th:text="${accMe.getEmail}">
+                </div>
+                <div class="info-email info-item" th:unless="${accMe}">
+                    information
+                </div>
+
+                <div class="sub-info">
+                    <div class="chage_pw item">
+                        <a href="/admin/editPassword">Đổi mật khẩu</a>
+                    </div>
+                    <div class="chage_pw item">
+                        <a href="/admin/edit">Đổi thông tin</a>
+                    </div>
+                    <div class="log_out item">
+                        <a href="/admin/login">Đăng xuất</a>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col c-0 m-3 l-2 col-left">
+            <div class="top_bar">
+                <h2>Quản trị viên</h2>
+            </div>
+            <ul class="bar mng_a">
+                <li><a href="/admin">Tổng quan</a></li>
+                <li>
+                    <span>Bán hàng</span>
+                    <ul class="sub_bar">
+                        <li><a th:href="@{'/admin/products_manager'}">Sản phẩm</a></li>
+                        <li><a href="/admin/customer_manager">Người dùng</a></li>
+                        <li><a href="/admin/oder_manager">Đơn hàng</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col c-12 m-9 l-10 content">
+            <div class="row no-gutters">
+                <div class="col l-12 heading">
+                    <h1>Statistical</h1>
+                </div>
+            </div>
+            <div class="messenger" th:if="${message}" th:text="${message}"></div>
+            <div class="row no-gutters" style="margin-top: 48px;">
+                <div class="col l-3 l-o-2">
+                    <div class="items">
+                        <a href="">
+                            <div class="item">
+                                <i class="fa-solid fa-users"></i> User: <span>[[${userNumber}]]</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col l-3 l-o-2">
+                    <div class="items">
+                        <a href="/admin/manager-admin" th:if="${superAdmin}"
+                           style="text-decoration: none; color: #000;">
+                            <div class="item">
+                                <i class="fa-solid fa-users"></i> Admin: <span>[[${adminNumber}]]</span>
+                            </div>
+                        </a>
+                        <div class="item" th:unless="${superAdmin}">
+                            <i class="fa-solid fa-users"></i> Admin: <span>[[${adminNumber}]]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters" style="margin-top: 48px;">
+                <div class="col l-3 l-o-2">
+                    <div class="items">
+                        <a href="">
+                            <div class="item" style="flex-direction: column">
+                                <span><i class="fa-solid fa-wine-bottle"></i> sản phẩm: <code>[[${productNumber}]]</code></span>
+                                <div class="item" style="height: 50px; margin: 0 4px">
+                                    <th:block th:each="quantity : ${listQuantityByCode}">
+                                        <span style="font-size: 1rem">[[${quantity}]].</span>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col l-3 l-o-2">
+                    <div class="items">
+                        <a href="/admin/category-manager">
+                            <div class="item">
+                                    <i class="fa-solid fa-wine-bottle"></i> Thương hiệu: <span>[[${pCodeNumber}]]</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters" style="margin-top: 48px; margin-bottom: 48px;">
+                <div class="col l-3 l-o-2">
+                    <div class="items">
+                        <a href="">
+                            <div class="item">
+                                <i class="fa-solid fa-file-invoice"></i> Đơn hàng: <span>[[${oderNumber}]]</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col l-3 l-o-2">
+                    <div class="items">
+                        <a href="">
+                            <div class="item">
+                                <i class="fa-solid fa-money-bill-1-wave"></i> Bán chạy: <span></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/admin/styleSignup.css">
+  <title>Sign up</title>
+</head>
+
+<body>
+<div class="container">
+  <div class="form-step">
+    <div class="line"></div>
+    <span>step1</span>
+    <span>step2</span>
+  </div>
+  <div style="text-align: center; font-size: 1.3rem;" th:if="${message}">[[${message}]]</div>
+  <form th:action="@{/admin/signup_check}" method="post" th:object="${admin}">
+    <div class="form form-one">
+      <h1>Sign up</h1>
+      <input type="text" placeholder="name" th:field="*{name}" required minlength="1">
+      <input type="text" placeholder="phone" th:field="*{sdt}" required minlength="1">
+      <button id="next" type="button">Next</button>
+    </div>
+    <div class="form form-two">
+      <h1>Sign up</h1>
+      <input type="email" placeholder="email" th:field="*{email}" required minlength="1">
+      <input type="password" placeholder="password" th:field="*{password}" required minlength="1">
+      <input type="hidden" th:field="*{enabled}">
+      <button id="back" type="button">Back</button>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+<script>
+  const next = document.querySelector("#next");
+  const back = document.querySelector("#back");
+  const formOne = document.querySelector(".form-one");
+  const formTwo = document.querySelector(".form-two");
+  const formLine = document.querySelector(".line");
+  next.addEventListener("click", function() {
+    formOne.style.left = "-340px"
+    formTwo.style.left = "0"
+    formLine.style.width = "340px"
+  })
+  back.addEventListener("click", function() {
+    formOne.style.left = "0"
+    formTwo.style.left = "340px"
+    formLine.style.width = "170px"
+  })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- -----------------------------------css cho icon font-awesome-------------------------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <!-- -----------------------thư viện owlcarousel------------------------------------ -->
+    <link rel="stylesheet" href="/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.theme.default.min.css">
+
+    <!-- -----------css chung---------------- -->
+    <link rel="stylesheet" href="/css/user/cart.css">
+    <!-- -----------css index---------------- -->
+    <link rel="icon" href="/image/thuonghieu/logo.png" type="image/x-icon">
+    <title>Giỏ hàng của bạn</title>
+</head>
+
+<body>
+    <section class="pc_screen">
+        <nav class="pc-nav nav">
+            <div class="container">
+                <ul>
+                    <li><a href="/"><img src="/image/thuonghieu/logo.png" alt=""></a></li>
+                    <li>
+                        <form th:action="@{/search}" method="post" enctype="multipart/form-data">
+                            <input type="text" autocomplete="off" class="input-search" name="nameSearch" placeholder="tìm kiếm...">
+                            <div class="autobox"></div>
+                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </li>
+                    <li th:if="${checkCart} != 0"><a href="/show-cart"><button class="cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                        <span class="dot"><code th:text="${checkCart}"></code></span></button></a>
+                    </li>
+                    <li th:if="${checkCart} == 0"><a href="/show-cart"><button><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</button></a>
+                    </li>
+                    <li th:if="${customerLogin} == null"><a href="/signing"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a></li>
+                    <li class="information" th:if="${customerLogin} != null">
+                        <a href="#">
+                            <img th:src="${customerLogin.avatarCustomerPath}">
+                            <span th:text="${customerLogin.name}"></span>
+                        </a>
+                        <ol class="subnav">
+                            <li>
+                                <a href="/info">Thông tin cá nhân</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Đăng xuất</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="mobile-nav nav">
+            <div class="container">
+                <ul>
+                    <li><a href="/"><img src="/image/thuonghieu/logo.png" alt=""></a></li>
+                    <li th:if="${checkCart} != 0"><a href="/show-cart"><button class="cart"><i class="fa-solid fa-cart-shopping"></i>
+                        <span class="dot"><code th:text="${checkCart}"></code></span></button></a>
+                    </li>
+                    <li th:if="${checkCart} == 0"><a href="/show-cart"><button><i class="fa-solid fa-cart-shopping"></i></button></a>
+                    </li>
+                    <li th:if="${customerLogin} == null"><a href="/signing"><i class="fa-solid fa-right-to-bracket"></i></a></li>
+                    <li class="information" th:if="${customerLogin} != null">
+                        <a href="#">
+                            <img th:src="${customerLogin.avatarCustomerPath}">
+                            <span th:text="${customerLogin.name}"></span>
+                        </a>
+                        <ol class="subnav">
+                            <li>
+                                <a href="/info">Thông tin cá nhân</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Đăng xuất</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+                <div class="form-search">
+                        <form th:action="@{/search}" method="post" enctype="multipart/form-data">
+                            <input type="text" autocomplete="off" class="input-search" name="nameSearch" placeholder="tìm kiếm...">
+                            <div class="autobox"></div>
+                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main">
+        <div class="container">
+            <div class="content">
+                <h2>Giỏ hàng của bạn</h2>
+            </div>
+            <div class="products">
+                <div th:if="${checkCart} == 0">
+                    <h3>Không có sản phẩm nào trong giỏ hàng của bạn</h3>
+                </div>
+                <th:block th:each="cart : ${listCartConvert}">
+                    <div class="row">
+                        <div class="col">
+                            <div class="image">
+                                <img th:src="@{'/product-images/'+ ${cart[0]} +'/'+ ${cart[7]}}" alt="">
+                            </div>
+                            <div class="name" th:text="${cart[2]}"></div>
+                            <div class="price">
+                                <strong>
+                                    <span class="newprice" th:text="${cart[3]}"> </span>
+                                    <sup>đ</sup>
+                                </strong>
+                                <span class="oldprice" th:if="${cart[5]} != ''">
+                                    <code></code><sup>đ</sup>
+                                </span>
+                                <span class="sale" th:if="${cart[5]} == ''"></span>
+                                <span class="sale" th:if="${cart[5]} != ''" >Giảm<code th:text="${cart[5]}"></code>%</span>
+                            </div>
+                        </div>
+                        <div class="col col-two">
+                            <div class="total">
+                                <a class="minus" th:href="@{'/cart/minus/'+${cart[9]}}"><i class="fa-solid fa-minus"></i></a>
+                                <input type="text" readonly th:value="${cart[8]}">
+                                <a class="plus" th:href="@{'/cart/plus/'+${cart[9]}}"><i class="fa-solid fa-plus"></i></a>
+                            </div>
+                            <div class="delete">
+                                <a th:href="@{'/cart/delete/'+ ${cart[9]}}"><i class="fa-solid fa-trash-can"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+
+            <div class="summary">
+                <div class="total-money">
+                    <span>Tiền hàng: </span>
+                    <strong class="item"><span th:text="${total}"></span><sup>đ</sup></strong>
+                </div>
+                <div class="ship">
+                    <span>Phí giao hàng:</span>
+                    <span class="item">15.000<sup>đ</sup></span>
+                </div>
+                <div class="order">
+                    <a th:if="${customerLogin} != null" th:href="@{'/order/'+${customerLogin.id}}">Đặt hàng</a>
+                    <a th:if="${customerLogin} == null">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="lienket-bar">
+                <div class="lienket">
+                    <h4 class="lienket-title">Hỗ trợ khách hàng</h4>
+                    <ul>
+                        <li class="lienket-item"><a href="">Hotline: <span>1900.2301</span></a></li>
+                        <li class="lienket-item"><a href="">Các câu hỏi thường gặp</a></li>
+                        <li class="lienket-item"><a href="">Gửi yêu cầu hỗ trợ</a></li>
+                    </ul>
+                </div>
+                <div class="lienket">
+                    <h4 class="lienket-title">Về Smart world</h4>
+                    <ul>
+                        <li class="lienket-item"><a href="">Giới thiệu smart world</a></li>
+                        <li class="lienket-item"><a href="">Tuyển dụng</a></li>
+                        <li class="lienket-item"><a href="">Gửi góp ý, khiếu nại</a></li>
+                    </ul>
+                </div>
+                <div class="lienket thong-tin-rieng">
+                    <h4 class="lienket-title">Kết nối với chúng tôi</h4>
+                    <ul>
+                        <li class="lienket-item"><a href="https://www.facebook.com/profile.php?id=100048327580198"><i
+                                    class="fa-brands fa-facebook"></i></a></li>
+                        <li class="lienket-item"><a href="tel:0359591411"><i class="fa-solid fa-square-phone"></i></a>
+                        </li>
+                        <li class="lienket-item"><a href="mailto:sonnn.21it@vku.udn.vn?subject=Hỗ trợ khách hàng"><i
+                                    class="fa-brands fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="thong-tin-them">
+            <div class="container">
+                <div class="thong-tin-them-text">
+                    <p>© 2018. Công ty cổ phần Smart World. Địa chỉ: 128 Trần Quang Khải, Q. Ngũ Hành Sơn, TP.Đà Nẵng.
+                        Điện thoại: 0359591411.
+                        Email: cskh@smartworld.com. Chịu trách nhiệm nội dung: Nguyễn Ngọc Sơn. </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script th:inline="javascript">
+        function messenger() {
+            let mess = [[${message}]]
+            if (mess != null)
+                alert(mess)
+        }
+        setTimeout(messenger, 200)
+    </script>
+
+    <script th:inline="javascript">
+        const listPrice = document.querySelectorAll(".newprice")
+        listPrice.forEach(element => {
+            let price = element.parentElement.parentElement
+            let priceOld = price.querySelector('.oldprice code')
+            let sale = price.querySelector(".sale code")
+            if (sale != null && priceOld != null) {
+                let toTalNum = Number(element.innerHTML) /( 1 - (Number(sale.innerHTML)/100))
+                priceOld.innerHTML = Math.round(toTalNum).toLocaleString('de-DE')
+            }
+        });
+    </script>
+    <script>
+        const newPrice = document.querySelectorAll(".price strong span")
+        newPrice.forEach(element => {
+            element.innerHTML = Number(element.innerHTML).toLocaleString('de-DE')
+        });
+        let total = document.querySelector(".total-money .item span")
+        total.innerHTML = Number(total.innerHTML).toLocaleString('de-DE')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><!-- -----------------------------------css cho icon font-awesome-------------------------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="icon" href="/image/thuonghieu/logo.png" type="image/x-icon">
+    <title>Đăng nhập</title>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #fff !important;
+        }
+
+        .user_card {
+            height: 400px;
+            width: 350px;
+            margin-top: 150px;
+            margin-bottom: auto;
+            background: #fff;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 5px;
+
+        }
+
+        .brand_logo_container {
+            position: absolute;
+            height: 100px;
+            width: 100px;
+            top: -50px;
+            border-radius: 50%;
+            background: #04AA6D;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+        }
+
+        .brand_logo {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .signin {
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .form_container {
+            margin-top: 15px;
+        }
+
+        .login_btn {
+            width: 100%;
+            background: #04AA6D !important;
+            color: white !important;
+        }
+
+        .login_btn:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+
+        .login_container {
+            padding: 0 2rem;
+        }
+
+        .input-group-text {
+            background: #04AA6D !important;
+            color: white !important;
+            border: 0 !important;
+            border-radius: 0.25rem 0 0 0.25rem !important;
+        }
+
+        .input_user,
+        .input_pass:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+
+        .trigger-btn {
+            display: block;
+            margin: 100px auto;
+        }
+        .back {
+            margin: 8px 12px;
+        }
+        .back i {
+            font-size: 2rem;
+            color: #04AA6D;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<div class="back">
+    <a href="/"><i class="fa-solid fa-circle-arrow-left"></i></a>
+</div>
+<div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+        <div class="user_card">
+            <div class="d-flex justify-content-center">
+                <div class="brand_logo_container">
+                    <img src="/image/imageLogin.png" class="brand_logo" alt="Logo">
+                </div>
+            </div>
+            <div class="signin">
+                <h2>ĐĂNG NHẬP</h2>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+                <form th:action="@{/login}" method="post" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="email" name="email" required class="form-control input_user" placeholder="E-mail">
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" required name="password" class="form-control input_pass"
+                               placeholder="Mật khẩu">
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <button type="submit" class="btn login_btn">Đăng nhập</button>
+                    </div>
+                </form>
+            </div>
+            <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                    Bạn chưa có tài khoản? <a href="/show-signup" class="ml-2">Đăng ký</a>
+                </div>
+                <div class="d-flex justify-content-center links">
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    function messenger() {
+        let mess = [[${message}]]
+        if (mess != null)
+            alert(mess)
+    }
+    setTimeout(messenger, 200)
+</script>
+</body>
+
+</html>

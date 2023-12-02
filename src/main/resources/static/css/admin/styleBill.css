@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.donhang{
+    border: 1px solid black;
+    width: 50%;
+    padding: 20px;
+    margin: 36px auto;
+}
+
+.bill {
+    text-align: center;
+}
+.bill .sub_bill {
+    display: flex;
+    justify-content: center;
+}
+.bill .items span {
+    display: block;
+    text-align: left;
+}
+.bill .items.right {
+    margin-left: 8px;
+}
+.table-customer {
+    display: flex;
+}
+.table-customer table {
+    border-collapse: collapse;
+    margin: 20px;
+    margin-right: 0;
+}
+.table-customer table.table-right {
+    margin-left: 0;
+}
+.table-customer table td {
+    padding: 8px 4px;
+}
+.table-customer .table-left td{
+    font-weight: bold;
+}
+.table-bill table {
+    background-color: white;
+    text-align: center;
+    border-collapse: collapse;
+    margin: 20px;
+}
+.table-bill table th,.table-bill table td {
+    padding: 8px;
+    border: 2px solid rgb(158, 156, 156);
+}
+.table-bill table th.left_bottom {
+    border-right: none;
+    text-align: left;
+}

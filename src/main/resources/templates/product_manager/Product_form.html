@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+    <link rel="stylesheet"type="text/css"th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
+    <form th:action="@{/admin/products_manager/save}" method="post" enctype="multipart/form-data"
+          style="max-width:500px; margin:0 auto;">
+        <div  th:if="${product.idP}">
+            <input type="hidden" th:value="${product.idP}" name="idP" >
+        </div>
+        <div  th:unless="${product.idP}" >
+            <input type="hidden" th:value="0" name="idP" >
+        </div>
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Code:</label>
+            <div class="col-sm-8">
+                <select name="pCode" class="form-control" required>
+                    <th:block th:each="cat : ${category}">
+                        <option th:if="${cat.id} == ${product.pCode}" th:selected="${cat.id}" th:text="${cat.name}" th:value="${cat.id}"></option>
+                        <option th:unless="${cat.id} == ${product.pCode}" th:text="${cat.name}" th:value="${cat.id}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name product:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="name" th:value="${product.nameP}" class="form-control" required minlength="1"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Price product:</label>
+                <div class="col-sm-8">
+                    <input type="text" name = "price" th:value="${product.price}" class="form-control" minlength="1"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">sale product:</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${product.sale}" name="sale"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Expired product:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="expired" th:value="${product.expired}" class="form-control" minlength="1"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Gas product:</label>
+                <div class="col-sm-8">
+                    <select name="gas" class="form-control" required>
+                        <option th:if="${product.gas} == 'coGa'" selected="selected" th:value="${'coGa'}">Có gas</option>
+                        <option th:if="${product.gas} != 'coGa'" th:value="${'coGa'}">Có gas</option>
+                        <option th:if="${product.gas} != 'khongGa'" th:value="${'khongGa'}">Không gas</option>
+                        <option th:if="${product.gas} == 'khongGa'" selected="selected" th:value="${'khongGa'}">Không gas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Image product:</label>
+                <div class="col-sm-8">
+                    <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Quantity product:</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${product.quantity}" name="quantity" class="form-control" required minlength="1"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit"class="btn btn-primary m-2" >Save</button>
+                <button type="button"class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function cancelForm() {
+        window.location = "[[@{/products_manager}]]";
+    }
+</script>
+</body>
+</html>

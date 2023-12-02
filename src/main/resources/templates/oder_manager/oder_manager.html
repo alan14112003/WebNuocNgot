@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Grid.css">
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/manageProduct.css">
+    <script src="https://kit.fontawesome.com/08c104de7d.js" crossorigin="anonymous"></script>
+    <title>Manage oder</title>
+    <style>
+        td:last-child{
+            min-width: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="grid">
+    <div class="row no-gutters">
+        <div class="col l-12 header">
+            <div class="logo">
+                <img src="/image/logo_2021.png" alt="">
+            </div>
+            <input type="checkbox" id="check" class="check-btn">
+            <label for="check" class="info">
+                <div class="info-avatar info-item">
+                    <img src="/image/admin.jpg" alt="">
+                </div>
+                <div class="info-email info-item" th:if="${accMe}" th:text="${accMe.getEmail}">
+                </div>
+                <div class="info-email info-item" th:unless="${accMe}">
+                    information
+                </div>
+
+                <div class="sub-info">
+                    <div class="chage_pw item">
+                        <a href="/admin/editPassword">Đổi mật khẩu</a>
+                    </div>
+                    <div class="chage_pw item">
+                        <a href="/admin/edit">Đổi thông tin</a>
+                    </div>
+                    <div class="log_out item">
+                        <a href="/admin/login">Đăng xuất</a>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col c-0 m-3 l-2 col-left">
+            <div class="top_bar">
+                <h2>Quản trị viên</h2>
+            </div>
+            <ul class="bar mng_a">
+                <li><a href="/admin">Tổng quan</a></li>
+                <li>
+                    <span>Bán hàng</span>
+                    <ul class="sub_bar">
+                        <li><a th:href="@{'/admin/products_manager'}">Sản phẩm</a></li>
+                        <li><a href="/admin/customer_manager">Người dùng</a></li>
+                        <li><a href="/admin/oder_manager">Đơn hàng</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col c-12 m-9 l-10 content">
+            <div class="row no-gutters">
+                <div class="col l-12 heading">
+                    <h1>Manage Oder</h1>
+                    <div class="tools">
+                        <div class="timkiem">
+                            <form action="" method="post">
+                                <input type="text" name="s" autocomplete="off" placeholder="Tìm kiếm..." id="inpS">
+                                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="messenger" th:if="${message}" th:text="${message}"></div>
+            <div class="table-product">
+                <table style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="oder : ${oderList}">
+                        <tr>
+                            <td>[[${oder.id}]]</td>
+                            <td>[[${oder.oderDate}]]</td>
+                            <td>[[${oder.customer}]]</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn-edit" th:href="@{'/admin/bill/'+ ${oder.id}}">
+                                        <i class="fa-solid fa-print"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+</script>
+</body>
+</html>

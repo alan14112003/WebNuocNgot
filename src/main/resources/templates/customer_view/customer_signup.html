@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <title>Sign up</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        body {
+            background-color: #ddd;
+        }
+        .con {
+            padding-top: 100px;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 340px;
+            height: 440px;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .container .form {
+            position: absolute;
+            top: 60px;
+            padding: 0 12px;
+            width: 340px;
+            transition: 0.8s;
+        }
+
+       .form h1 {
+            margin-top: 5px;
+            text-align: center;
+        }
+
+       .form p {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        span {
+            text-align: center;
+        }
+
+        .container .form input {
+            height: 30px;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .step p {
+            text-align: left;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        .container .form button {
+            height: 35px;
+            width: 100px;
+            background-color: green;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        .form-two {
+            left: -340px;
+
+        }
+
+        .form-step {
+            display: flex;
+            height: 40px;
+            border-bottom: 2px solid #ccc;
+            position: relative;
+        }
+
+        .form-step span {
+            display: block;
+            width: 170px;
+            line-height: 40px;
+        }
+
+        .line {
+            position: absolute;
+            width: 170px;
+            height: 40px;
+            background-color: green;
+            opacity: 0.6;
+            transition: all 0.5s ease;
+        }
+
+        .line::before {
+            position: absolute;
+            right: -20px;
+        }
+        .back {
+            margin: 8px 12px;
+        }
+        .back i {
+            font-size: 2rem;
+            color: #04AA6D;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="back">
+    <a href="/signing"><i class="fa-solid fa-circle-arrow-left"></i></a>
+</div>
+<div class="con" >
+    <div class="container">
+        <div class="form-step">
+            <div class="line"></div>
+            <span>Bước 1</span>
+            <span>Bước 2</span>
+        </div>
+        <form th:action="@{'/signup'}" method="post" th:object="${customer}">
+            <div class="form form-one">
+                <h1>ĐĂNG KÝ</h1>
+                <p>Vui lòng điền thông tin vào đây để tạo tài khoản.</p>
+                <b>Tên Người dùng</b><br>
+                <input type="hidden" th:field="*{id}" >
+                <input type="text" class="name" placeholder="Nhập tên" th:field="*{name}" required minlength="1">
+
+                <b>Số điện thoại</b><br>
+                <input type="text" class="phone" placeholder="Nhập số điện thoại" th:field="*{phone}" required minlength="1">
+
+                <b>Địa chỉ</b> <br>
+                <input type="text" class="address" placeholder="Nhập địa chỉ" th:field="*{address}" required minlength="1">
+                <div class="btn">
+                    <button type="button" id="next-one">Tiếp tục</button>
+                </div>
+            </div>
+            <div class="form form-two">
+                <h1>ĐĂNG KÝ</h1>
+                <p>Vui lòng điền thông tin vào đây để tạo tài khoản.</p>
+                <b>Email</b> <br>
+                <input type="email" placeholder="Nhập email" th:field="*{email}" required minlength="1">
+
+                <b>Mật khẩu</b><br>
+                <input type="password" placeholder="Nhập mật khẩu" th:field="*{password}" required minlength="1">
+                <input type="hidden" th:field="*{avatar}" >
+                <div class="step">
+                    <p>Bằng cách nhấp vào Đăng ký, bạn đồng ý với <a href="#" style="color:dodgerblue">Điều khoản & Quyền riêng tư</a> của chúng tôi.</p>
+                </div>
+                <div class="btn">
+                    <button type="button" id="back-one">Quay lại</button>
+                    <button>Đăng ký</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+    function messenger() {
+        let mess = [[${message}]]
+        if (mess != null)
+            alert(mess)
+    }
+    setTimeout(messenger, 200)
+</script>
+
+<script>
+        const nextOne = document.querySelector('#next-one')
+        const backOne = document.querySelector('#back-one')
+
+        const formOne = document.querySelector('.form-one')
+        const formTwo = document.querySelector('.form-two')
+
+        const formLine = document.querySelector('.line')
+
+        let name = document.querySelector(".name")
+        let phone = document.querySelector(".phone")
+        let address = document.querySelector(".address")
+
+        nextOne.addEventListener("click", function () {
+            if (name.value.trim() == "" ||
+                phone.value.trim() == "" ||
+                address.value.trim() == "")
+                alert("bạn phải điền đầy đủ tất cả các trường trước khi chuyển san phần tiếp theo.")
+            else {
+                formOne.style.left = "-340px"
+                formTwo.style.left = "0px"
+                formLine.style.width = "340px"
+            }
+        })
+        backOne.addEventListener("click", function () {
+            formOne.style.left = "0px"
+            formTwo.style.left = "340px"
+            formLine.style.width = "170px"
+        })
+    </script>
+</body>
+
+</html>

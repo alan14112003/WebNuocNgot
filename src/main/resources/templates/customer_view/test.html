@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/08c104de7d.js" crossorigin="anonymous"></script>
+    <title>Title</title>
+</head>
+<body>
+    <table border="1px" style="border-collapse: collapse">
+        <thead>
+        <th></th>
+        <th>tên</th>
+        <th>giá</th>
+        <th>sale</th>
+        <th>hạn sử dụng</th>
+        <th>số lượng</th>
+        <th>chọn</th>
+        </thead>
+        <tbody>
+            <th:block th:each="cart : ${listCartConvert}">
+                <tr>
+                    <td> <img style="height: 50px; object-fit: cover" th:src="@{'/product-images/'+ ${cart[0]} +'/'+ ${cart[7]}}"></td>
+                    <td th:text="${cart[2]}"></td>
+                    <td th:text="${cart[3]}"></td>
+                    <td th:unless="${cart[5]} == ''" th:text="${cart[5]}"></td>
+                    <td th:if="${cart[5]} == ''">Không</td>
+                    <td th:text="${cart[4]}"></td>
+                    <td>
+                        <div style="display: flex;">
+                            <a th:href="@{'/cart/minus/'+${cart[9]}}"><i class="fa-solid fa-minus"></i></a>
+                            <input type="text" readonly th:value="${cart[8]}" style=" text-align: center; margin: auto 4px; width: 25px; outline: none">
+                            <a th:href="@{'/cart/plus/'+${cart[9]}}"><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </td>
+                    <td><a th:href="@{'cart/delete/'+ ${cart[9]}}">xóa</a></td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+    <div style="text-align: center">
+        Tổng tiền: <span th:text="${total}"></span>
+    </div>
+</body>
+</html>
